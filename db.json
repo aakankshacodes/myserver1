@@ -14,3 +14,34 @@
     },
     
 }  
+using System;
+using System.Linq;
+using System.Web.UI.WebControls;
+
+namespace YourNamespace
+{
+    public partial class YourPage : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Assuming your dataset is bound to the GridView named GridView1
+            CompareDuplicateIds();
+        }
+
+        private void CompareDuplicateIds()
+        {
+            var repeatedIdGroups = GridView1.Rows.Cast<GridViewRow>()
+                .GroupBy(row => ((Label)row.FindControl("IdLabel")).Text)
+                .Where(group => group.Count() > 1); // Select groups with repeated IDs
+
+            foreach (var group in repeatedIdGroups)
+            {
+                foreach (GridViewRow row in group)
+                {
+                    // Compare or process rows with repeated IDs here
+                    // For example: var id = ((Label)row.FindControl("IdLabel")).Text;
+                }
+            }
+        }
+    }
+}
